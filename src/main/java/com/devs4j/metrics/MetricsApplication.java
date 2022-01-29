@@ -11,12 +11,12 @@ public class MetricsApplication {
 		CompositeMeterRegistry compositeMeter = new CompositeMeterRegistry();
 		
 		Counter counter = compositeMeter.counter("numero.empleados","oficina","Benito Juarez");
-		counter.increment();
-		counter.increment(200);
 		
 		MeterRegistry registry= new SimpleMeterRegistry();
 		
 		compositeMeter.add(registry);
+		counter.increment();
+		counter.increment(200);
 		
 		System.out.printf("Numero de empleados %f", counter.count());
 	}
