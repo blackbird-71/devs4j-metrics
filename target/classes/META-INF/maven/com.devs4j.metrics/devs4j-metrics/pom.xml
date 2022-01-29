@@ -4,6 +4,14 @@
   <artifactId>devs4j-metrics</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
+	<dependencies>
+		<dependency>
+			<groupId>io.micrometer</groupId> 
+			<artifactId>micrometer-core</artifactId>
+			<version>1.7.1</version> 
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins> 
 			<plugin>  
