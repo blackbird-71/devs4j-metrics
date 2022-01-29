@@ -1,7 +1,10 @@
 package com.devs4j.metrics;
 
+import java.util.concurrent.TimeUnit;
+
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 
 public class MetricsApplication {
@@ -9,17 +12,17 @@ public class MetricsApplication {
 		
 		MeterRegistry registry= new SimpleMeterRegistry();
 		
-		//Se crea el contador utilizando el MeterRegistry
-		Counter counter2 = registry.counter("devs4j.students", "course","Metricas con micrometer");
+		Timer timer = registry.timer("execution.time");
 		
-		//Se crea el contador utilizando el builder del Counter
-		Counter counter = Counter.builder("devs4j.students")
-		.description("Numero de estudiantes de devs4j")
-		.tag("course", "Metricas con micrometer")
-		.register(registry);
-		counter.increment();
-		counter.increment(200);
+		timer.record(()->{
+			for (int i = 0; i < 10; i++) {
+				System.out.println(i);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {}
+			}
+		});
 		
-		System.out.println(counter.count());
+		System.out.println(timer.totalTime(TimeUnit.SECONDS));
 	}
 }
